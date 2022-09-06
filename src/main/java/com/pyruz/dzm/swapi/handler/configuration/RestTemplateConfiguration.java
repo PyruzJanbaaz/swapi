@@ -1,9 +1,9 @@
 package com.pyruz.dzm.swapi.handler.configuration;
 
 import com.pyruz.dzm.swapi.handler.exception.RestTemplateException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.cache.CacheConfig;
 import org.apache.http.impl.client.cache.CachingHttpClientBuilder;
-import org.apache.http.client.HttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
