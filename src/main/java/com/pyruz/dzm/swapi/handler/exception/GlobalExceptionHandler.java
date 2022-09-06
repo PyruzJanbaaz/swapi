@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -102,5 +103,18 @@ public class GlobalExceptionHandler {
         HttpStatus httpStatus = ex.getCode() == null ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.resolve(ex.getCode());
         assert httpStatus != null;
         return new ResponseEntity<>(baseDTO, httpStatus);
+    }
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    public Object handleHttpClientErrorException(HttpClientErrorException ex) {
+        BaseDTO baseDTO = BaseDTO.builder()
+                .meta(
+                        MetaDTO.builder()
+                                .code(ex.getStatusCode().value())
+                                .message(ex.getStatusText())
+                                .build()
+                )
+                .build();
+        return new ResponseEntity<>(baseDTO, ex.getStatusCode());
     }
 }
