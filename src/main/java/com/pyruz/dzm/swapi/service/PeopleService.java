@@ -1,4 +1,4 @@
-package com.pyruz.dzm.swapi.service.impl;
+package com.pyruz.dzm.swapi.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
