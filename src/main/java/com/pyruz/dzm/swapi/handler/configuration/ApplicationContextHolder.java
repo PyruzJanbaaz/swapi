@@ -16,7 +16,6 @@ public class ApplicationContextHolder {
     protected ApplicationMessages applicationMessages;
     protected RestTemplateUtility restTemplateUtility;
 
-
     @Autowired
     public void context(ApplicationContext context) {
         logger = context.getBean(Logger.class);
@@ -24,6 +23,4 @@ public class ApplicationContextHolder {
         this.applicationMessages = context.getBean(ApplicationMessages.class);
         this.restTemplateUtility = context.getBean(RestTemplateUtility.class);
     }
-
-
 }

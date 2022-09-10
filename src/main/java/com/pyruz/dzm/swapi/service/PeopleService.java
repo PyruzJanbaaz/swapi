@@ -14,6 +14,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class PeopleService extends ApplicationContextHolder implements IPeople {
 
+    /**
+     * Returns list of star war characters.
+     * <p>
+     * This method always returns immediately, whether or not the star war characters exists.
+     *
+     * @param  pageNumber  the number of page
+     * @param  search the query to search on the name property
+     * @return List<People> the list of star war characters
+     */
     public BaseDTO getPeople(int pageNumber, String search) throws JsonProcessingException {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(
                 applicationProperties.getProperty("swapi.base.url") + applicationProperties.getProperty("swapi.path.people"))

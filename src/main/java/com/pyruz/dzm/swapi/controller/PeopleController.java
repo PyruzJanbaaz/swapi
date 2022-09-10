@@ -20,6 +20,15 @@ public class PeopleController {
         this.peopleService = peopleService;
     }
 
+    /**
+     * Returns list of star war characters.
+     * <p>
+     * This method always returns immediately, whether or not the star war characters exists.
+     *
+     * @param  pageNumber  the number of page
+     * @param  search the query to search on the name property
+     * @return List<People> the list of star war characters
+     */
     @GetMapping(value = "v1/people")
     public ResponseEntity<BaseDTO> getPeople(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
                                              @RequestParam(value = "search", required = false) String search) throws JsonProcessingException {
