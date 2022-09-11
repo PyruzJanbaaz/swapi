@@ -1,13 +1,10 @@
 # SWAPI-WARPPER
 Simple web application which is created by Vue.js to show the Star Wars characters! All the data is accessible through our HTTP web API. Consult https://swapi.dev/ if you'd like to get started. Helper libraries for popular programming languages are also provided so you can consume swapi in your favourite programming language, in a style that suits you.
 
-I create a Spring Boot project(Rest APIs) for a simple shop. You need the following tools and technologies to develop the same.
-- Spring-Boot 2.5.5.RELEASE
-- Spring-Security 2.5.5.RELEASE
-- Spring-Data 2.5.5.RELEASE
+I create a Spring Boot project(Rest APIs) as a warpper to get data from online API. You need the following tools and technologies to develop the same.
+- Spring-Boot 2.7.1
 - Springfox-swagger2 2.9.2
-- Lombok 1.18.6
-- MapStruct 1.0.3.FINAL
+- Lombok 1.18.12
 - JavaSE 11
 - Maven 3.3.9
 
@@ -17,47 +14,17 @@ Open the pom.xml file for spring-aop configuration:
       <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.5.RELEASE</version>
+        <version>2.7.1</version>
         <relativePath/> <!-- lookup parent from repository -->
       </parent>
       
 and dpendencies:
 
-       <!-- SPRING -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <!-- Starter for using Spring Security -->
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-       <!-- PROJECT LOMBOK -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- MAPSTRUCT -->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
 
-
-# Features
-
-1. User sign-in signup. The application should have 2 types of roles, ADMIN, and USER.
-2. Admin functionality -> CRUD of products per category, block unblock the users.
-3. Users be able to search for products per product name, price range, rate, etc.
-4. Users be able to rate the product(1-5), leave a comment on it.
-
-
-Also I make properties files for development and deployment environment and set the profile in the application accordingly, so it will pick the respective properties file.
 
 # Usage
-Run the project and go to http://localhost:9091/swagger-ui.html on your browser!
+Run the project and go to http://localhost:7777/swagger-ui.html on your browser!
