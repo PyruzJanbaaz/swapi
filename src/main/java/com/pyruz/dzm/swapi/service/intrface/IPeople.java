@@ -1,7 +1,8 @@
 package com.pyruz.dzm.swapi.service.intrface;
 
-import com.pyruz.dzm.swapi.model.dto.base.BaseDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.pyruz.dzm.swapi.model.dto.people.PeopleDTOs;
 
 public interface IPeople {
-    BaseDTO getPeople(int pageNumber, String search) throws Exception;
+    PeopleDTOs getPeople(int pageNumber, String search) throws JsonProcessingException;
 }
