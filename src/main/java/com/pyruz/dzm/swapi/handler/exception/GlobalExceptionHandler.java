@@ -3,102 +3,88 @@ package com.pyruz.dzm.swapi.handler.exception;
 import com.pyruz.dzm.swapi.model.dto.ServiceExceptionDTO;
 import com.pyruz.dzm.swapi.model.dto.base.BaseDTO;
 import com.pyruz.dzm.swapi.model.dto.base.MetaDTO;
-import com.pyruz.dzm.swapi.utility.ApplicationMessages;
-import com.pyruz.dzm.swapi.utility.ApplicationProperties;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
-    final ApplicationProperties applicationProperties;
-    final ApplicationMessages applicationMessages;
-
-    public GlobalExceptionHandler(ApplicationProperties applicationProperties, ApplicationMessages applicationMessages) {
-        this.applicationProperties = applicationProperties;
-        this.applicationMessages = applicationMessages;
-    }
+    final MessageSource messageSource;
 
     // --> ServiceLevelValidation
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<BaseDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpServletRequest request) {
+    protected ResponseEntity<BaseDTO> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         BaseDTO baseDTO = new BaseDTO();
-        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+        var fields = ex.getBindingResult().getFieldErrors();
+        if (!fields.isEmpty()) {
             baseDTO.setMeta(
                     MetaDTO.builder()
                             .code(HttpStatus.BAD_REQUEST.value())
                             .message(
-                                    String.format(
-                                            applicationMessages.getProperty("application.message.validation.error.text"),
-                                            error.getField()
-                                    )
-                            )
-                            .build()
-            );
-            break;
+                                    messageSource.getMessage(
+                                            "application.message.validation.error.text",
+                                            new Object[]{fields.get(0).getField()},
+                                            Locale.ENGLISH))
+                            .build());
         }
         return new ResponseEntity<>(baseDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public final ResponseEntity<BaseDTO> handleMissingParameterException(MissingServletRequestParameterException ex, WebRequest request) {
-        Object convertedFieldName = applicationMessages.getProperty(ex.getParameterName());
+    public final ResponseEntity<BaseDTO> handleMissingParameterException(MissingServletRequestParameterException ex) {
         MetaDTO metaDTO = MetaDTO.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
                 .message(
-                        String.format(
-                                applicationMessages.getProperty("application.message.missing.parameter.text"),
-                                convertedFieldName == null ? ex.getParameterName() : convertedFieldName.toString()
-                        )
-                ).build();
+                        messageSource.getMessage(
+                                "application.message.missing.parameter.text",
+                                new Object[]{ex.getParameterName()},
+                                Locale.ENGLISH))
+                .build();
         return new ResponseEntity<>(BaseDTO.builder().meta(metaDTO).build(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public Object handleNoHandlerFoundException(NoHandlerFoundException ex, WebRequest request) {
+    public Object handleNoHandlerFoundException(NoHandlerFoundException ex) {
         BaseDTO baseDTO = BaseDTO.builder()
                 .meta(
                         MetaDTO.builder()
                                 .code(HttpStatus.BAD_REQUEST.value())
                                 .message(ex.getMessage())
-                                .build()
-                )
+                                .build())
                 .build();
         return new ResponseEntity<>(baseDTO, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public Object handleGlobalException(Exception ex, HttpServletRequest request) {
+    public Object handleGlobalException(Exception ex) {
         BaseDTO baseDTO = BaseDTO.builder()
                 .meta(
                         MetaDTO.builder()
                                 .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                                 .message(ex.getMessage())
-                                .build()
-                )
+                                .build())
                 .build();
         return new ResponseEntity<>(baseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ServiceExceptionDTO.class)
-    public final ResponseEntity<BaseDTO> handleServiceException(ServiceExceptionDTO ex, WebRequest request) {
+    public final ResponseEntity<BaseDTO> handleServiceException(ServiceExceptionDTO ex) {
         BaseDTO baseDTO = BaseDTO.builder()
                 .meta(
                         MetaDTO.builder()
                                 .code(ex.getCode())
                                 .message(ex.getMessage())
-                                .build()
-                )
+                                .build())
                 .build();
         HttpStatus httpStatus = ex.getCode() == null ? HttpStatus.INTERNAL_SERVER_ERROR : HttpStatus.resolve(ex.getCode());
         assert httpStatus != null;
@@ -112,8 +98,7 @@ public class GlobalExceptionHandler {
                         MetaDTO.builder()
                                 .code(ex.getStatusCode().value())
                                 .message(ex.getStatusText())
-                                .build()
-                )
+                                .build())
                 .build();
         return new ResponseEntity<>(baseDTO, ex.getStatusCode());
     }

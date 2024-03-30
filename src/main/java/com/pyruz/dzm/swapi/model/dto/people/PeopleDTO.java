@@ -22,11 +22,11 @@ public class PeopleDTO {
    private String birth_year;
    private String gender;
    private String homeworld;
+   private String created;
+   private String edited;
+   private String url;
    private List<String> films;
    private List<String> species;
    private List<String> vehicles;
    private List<String> starships;
-   private String created;
-   private String edited;
-   private String url;
 }

@@ -1,5 +1,6 @@
 package com.pyruz.dzm.swapi.handler.exception;
 
+import lombok.NonNull;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -11,10 +12,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class RestTemplateException implements ResponseErrorHandler {
+public class RestTemplateErrorHandler implements ResponseErrorHandler {
 
     @Override
-    public boolean hasError(ClientHttpResponse clientHttpResponse) {
+    public boolean hasError(@NonNull ClientHttpResponse  clientHttpResponse) {
         return true;
     }
 

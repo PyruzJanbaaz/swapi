@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PeopleDTOs {
     private List<PeopleDTO> results;
-    private Integer count;
+    private int count;
     private String next;
     private String previous;
 }

@@ -2,12 +2,11 @@ package com.pyruz.dzm.swapi.model.dto;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class ServiceExceptionDTO extends  RuntimeException{
-    private Integer code;
-    private String message;
+public class ServiceExceptionDTO extends RuntimeException {
+    private final Integer code;
+    private final String message;
 }

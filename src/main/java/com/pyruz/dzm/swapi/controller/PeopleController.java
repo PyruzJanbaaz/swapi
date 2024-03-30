@@ -23,7 +23,7 @@ public class PeopleController {
     /**
      * Returns list of star war characters.
      * <p>
-     * This method always returns immediately, whether or not the star war characters exists.
+     * This method always returns immediately, whether the star war characters exists.
      *
      * @param  pageNumber  the number of page
      * @param  search the query to search on the name property

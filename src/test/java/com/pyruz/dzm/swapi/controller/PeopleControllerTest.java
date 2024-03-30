@@ -1,8 +1,6 @@
 package com.pyruz.dzm.swapi.controller;
 
 import com.pyruz.dzm.swapi.service.PeopleService;
-import com.pyruz.dzm.swapi.utility.ApplicationMessages;
-import com.pyruz.dzm.swapi.utility.ApplicationProperties;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,19 +24,9 @@ public class PeopleControllerTest {
     @MockBean
     private PeopleService peopleService;
 
-    @MockBean
-    private ApplicationProperties applicationProperties;
-
-    @MockBean
-    ApplicationMessages applicationMessages;
-
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(
-                new PeopleController(peopleService),
-                applicationProperties,
-                applicationMessages
-        ).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(new PeopleController(peopleService)).build();
     }
 
     @Test
