@@ -18,6 +18,7 @@ class PeopleIntegrationTest {
 
     private final String API_URI = "/api/v1/people?pageNumber=%s&search=%s";
     private final String QUERY = "Owen";
+
     @Autowired
     private TestRestTemplate testRestTemplate;
 
