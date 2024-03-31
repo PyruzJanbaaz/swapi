@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PeopleDTO  implements Serializable {
+public class PeopleDto implements Serializable {
    private String name;
    private String height;
    private String mass;

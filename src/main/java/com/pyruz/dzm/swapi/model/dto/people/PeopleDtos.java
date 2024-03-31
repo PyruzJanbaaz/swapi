@@ -13,8 +13,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PeopleDTOs implements Serializable {
-    private transient List<PeopleDTO> results;
+public class PeopleDtos implements Serializable {
+    private transient List<PeopleDto> results;
     private int count;
     private String next;
     private String previous;
