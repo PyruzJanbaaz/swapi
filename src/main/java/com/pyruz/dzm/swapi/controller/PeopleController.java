@@ -35,4 +35,9 @@ public class PeopleController {
         return ResponseEntity.ok(peopleService.getPeople(pageNumber, search));
     }
 
+    @GetMapping(value = "v1/people/cacheEvict")
+    @ResponseStatus(HttpStatus.OK)
+    public void cacheEvict() {
+        peopleService.cacheEvict();
+    }
 }

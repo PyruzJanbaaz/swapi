@@ -5,4 +5,5 @@ import com.pyruz.dzm.swapi.model.dto.people.PeopleDtos;
 
 public interface IPeople {
     PeopleDtos getPeople(int pageNumber, String search) throws JsonProcessingException;
+    void cacheEvict();
 }
