@@ -11,20 +11,23 @@ I create a Spring Boot project(Rest APIs) as a warpper to get data from online A
 # Dependencies
 Open the pom.xml file for spring-aop configuration:
 
-      <parent>
+    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.1</version>
         <relativePath/> <!-- lookup parent from repository -->
-      </parent>
+    </parent>
       
 and dpendencies:
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+    </dependency>
 
 
 # Usage
+Run flyway migration:
+
+    mvn flyway:migrate -Dflyway.user=postgres -Dflyway.password=p.postgres -Dflyway.url=jdbc:postgresql://localhost:5454/swapi?currentSchema=swapi-dev
 Run the project and go to http://localhost:7777/swagger-ui.html on your browser!
