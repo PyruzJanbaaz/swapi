@@ -1,6 +1,9 @@
 package com.pyruz.dzm.swapi.service.intrface;
 
 
-public interface ICity {
+import com.pyruz.dzm.swapi.model.domain.CityBean;
+import com.pyruz.dzm.swapi.model.entity.City;
 
+public interface ICity {
+    void addCity(CityBean cityBean);
 }

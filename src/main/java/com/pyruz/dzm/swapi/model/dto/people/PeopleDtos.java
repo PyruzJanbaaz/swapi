@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PeopleDtos implements Serializable {
-    private transient List<PeopleDto> results;
+    private List<PeopleDto> results;
     private int count;
     private String next;
     private String previous;
