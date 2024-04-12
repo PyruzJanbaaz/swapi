@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICountry {
     void addCountry(CountryBean countryBean);
-    void editCountry(Integer id, CountryBean countryBean);
+    Country editCountry(Integer id, CountryBean countryBean);
     Country findById(Integer id);
     List<Country> findAllCountries();
 }

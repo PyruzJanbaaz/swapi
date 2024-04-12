@@ -5,7 +5,6 @@ import com.pyruz.dzm.swapi.model.domain.CountryBean;
 import com.pyruz.dzm.swapi.model.entity.Country;
 import com.pyruz.dzm.swapi.service.CityService;
 import com.pyruz.dzm.swapi.service.CountryService;
-import com.pyruz.dzm.swapi.service.intrface.ICountry;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,16 +41,21 @@ public class CountryController {
     }
 
     @PutMapping("/v1/country")
-    public ResponseEntity<String> editCountry(@RequestParam Integer id,
-                                              @Valid @RequestBody CountryBean countryBean) {
-        countryService.editCountry(id, countryBean);
-        return ResponseEntity.status(HttpStatus.CREATED).body("OK!");
+    public ResponseEntity<Country> editCountry(@RequestParam Integer id,
+                                               @Valid @RequestBody CountryBean countryBean) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(countryService.editCountry(id ,countryBean));
     }
 
-    @GetMapping("/v1/country")
+    @GetMapping("/v1/countries")
     public ResponseEntity<List<Country>> findAllCountries() {
         return ResponseEntity.status(HttpStatus.OK).body(countryService.findAllCountries());
     }
+
+    @GetMapping("/v1/country")
+    public ResponseEntity<Country> findCountryById(@RequestParam Integer id) {
+        return ResponseEntity.status(HttpStatus.OK).body(countryService.findById(id));
+    }
+
 
     @PostMapping("/v1/city")
     public ResponseEntity<String> addCity(@Valid @RequestBody CityBean cityBean) {

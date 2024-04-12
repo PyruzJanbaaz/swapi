@@ -1,29 +1,17 @@
 package com.pyruz.dzm.swapi.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pyruz.dzm.swapi.model.domain.CountryBean;
-import com.pyruz.dzm.swapi.model.dto.people.PeopleDtos;
 import com.pyruz.dzm.swapi.model.entity.Country;
 import com.pyruz.dzm.swapi.repository.CountryRepository;
 import com.pyruz.dzm.swapi.service.intrface.ICountry;
-import com.pyruz.dzm.swapi.service.intrface.IPeople;
-import com.pyruz.dzm.swapi.utility.RestTemplateUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpMethod;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -42,15 +30,19 @@ public class CountryService implements ICountry {
     }
 
     @Override
-    @CachePut(cacheNames = "countries", key = "#id")
-    public void editCountry(Integer id, CountryBean countryBean) {
-        Country country = this.findById(id);
+    @Caching(
+            evict = { @CacheEvict(cacheNames = "countries", beforeInvocation = true, allEntries = true)},
+            put = { @CachePut(cacheNames = "countries", key = "#id")}
+    )
+    public Country editCountry(Integer id, CountryBean countryBean) {
+        var country = findById(id);
         country.setCode(countryBean.getCode());
         country.setName(countryBean.getName());
-        countryRepository.save(country);
+        return countryRepository.save(country);
     }
 
     @Override
+    @Cacheable(value = "countries", key = "#id")
     public Country findById(Integer id) {
         return countryRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Not found!")
@@ -58,7 +50,7 @@ public class CountryService implements ICountry {
     }
 
     @Override
-    @Cacheable("countries")
+    @Cacheable(value = "countries")
     public List<Country> findAllCountries() {
         return countryRepository.findAll();
     }
